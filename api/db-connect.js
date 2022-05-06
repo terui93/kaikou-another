@@ -1,7 +1,7 @@
 const { Client } = require('pg')
 require('dotenv').config()
 
-const url = process.env.DB_URL
+const url = process.env.DATABASE_URL
 
 const getComments = function(res, page) {
     const client = new Client({

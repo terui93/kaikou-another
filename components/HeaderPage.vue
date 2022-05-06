@@ -3,9 +3,9 @@
         <nuxt-link class="headerlogo1" to="/">
             <img src="~/assets/image/kaikou-logo.png">
         </nuxt-link>
-        <div class="headerlogo2">
+        <nuxt-link class="headerlogo2" to="/">
             <img src="~/assets/image/kaikou-logo2.png">
-        </div>
+        </nuxt-link>
         <a v-on:click="audioPlay" v-show="!playingNow" class="button"><img src="~/assets/image/music_play.png" alt="play"></a>
         <a v-on:click="audioStop" v-show="playingNow" class="button"><img src="~/assets/image/music_stop.png" alt="stop"></a>
     </header>
