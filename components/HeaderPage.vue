@@ -1,32 +1,44 @@
 <template>
-    <header>
-        <nuxt-link class="headerlogo1" to="/">
-            <img src="~/assets/image/kaikou-logo.png">
-        </nuxt-link>
-        <nuxt-link class="headerlogo2" to="/">
-            <img src="~/assets/image/kaikou-logo2.png">
-        </nuxt-link>
-        <a v-on:click="audioPlay" v-show="!playingNow" class="button"><img src="~/assets/image/music_play.png" alt="play"></a>
-        <a v-on:click="audioStop" v-show="playingNow" class="button"><img src="~/assets/image/music_stop.png" alt="stop"></a>
-    </header>
+    <transition>
+        <header v-if="visible">
+            <nuxt-link class="headerlogo1" to="/">
+                <img src="~/assets/image/kaikou-logo.png">
+            </nuxt-link>
+            <nuxt-link class="headerlogo2" to="/">
+                <img src="~/assets/image/kaikou-logo2.png">
+            </nuxt-link>
+            <a v-on:click="audioPlay" v-show="!playingNow" class="button"><img src="~/assets/image/music_play.png" alt="play"></a>
+            <a v-on:click="audioStop" v-show="playingNow" class="button"><img src="~/assets/image/music_stop.png" alt="stop"></a>
+        </header>
+    </transition>
 </template>
 
 <script>
 import audioPath from '~/assets/sound/hero.mp3'
-import { mapMutations } from 'vuex'
-import { mapGetters } from 'vuex'
+import { mapMutations, mapGetters, mapState } from 'vuex'
 
 export default {
     data() {
         return {
-            visible: true,
+            visible: this.$store.getters['load/firstView'],
             audio: this.$store.getters['load/audio'],
             playingNow: this.$store.getters['load/playingNow']
         }
     },
 
     mounted: function() {
+    },
 
+    computed: {
+        getVisible: function() {
+            return this.$store.getters["load/firstView"];
+        }
+    },
+
+    watch: {
+        getVisible(value) {
+            this.visible = value
+        }
     },
 
     methods: {
@@ -45,7 +57,7 @@ export default {
             this.audio.pause();
             this.playingNow = !this.playingNow;
             this.$store.commit('load/isPlayingNow', this.playingNow);
-        }
+        },
     }
 }
 </script>

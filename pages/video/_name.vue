@@ -52,6 +52,7 @@ export default {
     mounted: function() {
         this.isLoaded();
         this.getComment();
+        this.$store.commit('load/isFirstView');
     },
 
     methods: {

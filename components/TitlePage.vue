@@ -14,6 +14,7 @@
 <script>
 import Vue from 'vue'
 import VueCookies from 'vue-cookies' 
+import { mapMutations } from 'vuex'
 Vue.use(VueCookies);
 
 export default {
@@ -36,6 +37,11 @@ export default {
                 window.setTimeout(() => {
                     this.visible = true;
                 }, 5000);
+                window.setTimeout(() => {
+                    this.$store.commit('load/isFirstView');
+                }, 7000)
+            } else {
+                    this.$store.commit('load/isFirstView');
             }
         },
         onScroll() {
