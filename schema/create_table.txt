@@ -1,0 +1,8 @@
+create table comments (
+id SERIAL NOT NULL,
+name TEXT NOT NULL,
+comment TEXT,
+status varchar(1) not null,
+page TEXT,
+timestamp TIMESTAMP
+);

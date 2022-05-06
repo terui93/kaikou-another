@@ -18,36 +18,46 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
+
 export default {
     data() {
         return {
-            visible: true,
+            visible: !this.$store.getters['load/loaded'],
             visibleLogo: false,
             visibleLogo2: false,
+            loaded: false,
         };
     },
 
     mounted: function() {
         this.fadeLogos();
+        this.isLoaded();
     },
 
     methods: {
         fadeLogos() {
-            window.setTimeout(() => {
-                this.visible = true;
-            },500);
-            window.setTimeout(() => {
-                this.visibleLogo = true;
-            },1000);
-            window.setTimeout(() => {
-                this.visibleLogo2 = true;
-            },2000);
-            window.setTimeout(() => {
-                this.visible = false;
-                this.visibleLogo = false;
-                this.visibleLogo2 = false;
-            },5000);
-        }
+            if (!this.$store.getters['load/loaded']) {
+                window.setTimeout(() => {
+                    this.visible = true;
+                },0);
+                window.setTimeout(() => {
+                    this.visibleLogo = true;
+                },1000);
+                window.setTimeout(() => {
+                    this.visibleLogo2 = true;
+                },2000);
+                window.setTimeout(() => {
+                    this.visible = false;
+                    this.visibleLogo = false;
+                    this.visibleLogo2 = false;
+                },5000);
+            }
+        },
+        isLoaded() {
+            this.$store.commit('load/isLoaded');
+        },
     },
 };
 </script>

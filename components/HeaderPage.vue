@@ -1,25 +1,27 @@
 <template>
     <header>
-        <div class="headerlogo1">
+        <nuxt-link class="headerlogo1" to="/">
             <img src="~/assets/image/kaikou-logo.png">
-        </div>
+        </nuxt-link>
         <div class="headerlogo2">
             <img src="~/assets/image/kaikou-logo2.png">
         </div>
-        <a v-on:click="audioPlay" v-show="!playingNow"><img src="~/assets/image/music_play.png" alt="play"></a>
-        <a v-on:click="audioStop" v-show="playingNow"><img src="~/assets/image/music_stop.png" alt="stop"></a>
+        <a v-on:click="audioPlay" v-show="!playingNow" class="button"><img src="~/assets/image/music_play.png" alt="play"></a>
+        <a v-on:click="audioStop" v-show="playingNow" class="button"><img src="~/assets/image/music_stop.png" alt="stop"></a>
     </header>
 </template>
 
 <script>
 import audioPath from '~/assets/sound/hero.mp3'
+import { mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
         return {
             visible: true,
-            audio: '',
-            playingNow: false
+            audio: this.$store.getters['load/audio'],
+            playingNow: this.$store.getters['load/playingNow']
         }
     },
 
@@ -29,15 +31,20 @@ export default {
 
     methods: {
         audioPlay() {
-            this.audio = new Audio(audioPath);
+            if (this.audio == '') {
+                this.$store.commit('load/setAudio', audioPath);
+                this.audio = this.$store.getters['load/audio'];
+            }
             this.audio.loop = true;
             this.audio.play();
             this.audio.volume = 0.05;
             this.playingNow = !this.playingNow;
+            this.$store.commit('load/isPlayingNow', this.playingNow);
         },
         audioStop() {
             this.audio.pause();
             this.playingNow = !this.playingNow;
+            this.$store.commit('load/isPlayingNow', this.playingNow);
         }
     }
 }
@@ -71,14 +78,14 @@ header {
     left: 50%;
     transform: translate(-50%, -100%);
 }
-header a {
+header .button {
     position: absolute;
     z-index: 15;
     top: 50%;
     left: 95%;
     transform: translate(-95%, -50%);
 }
-header a img {
+header .button img {
     width: auto;
     height: 5vh;
 }

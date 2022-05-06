@@ -38,6 +38,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/vuetify',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -57,5 +58,13 @@ export default {
         },
       })
     },
+  },
+
+  serverMiddleware: [
+    '~/api'
+  ],
+
+  env: {
+    dbUrl: 'postgres://engwjysraxvuhk:83ee81933cbdf4c8a7b01a3bc3e9f6d75975ee0ba7dcf51d62f94d3e1359c150@ec2-18-210-64-223.compute-1.amazonaws.com:5432/d6vgau5fedo2g5'
   }
 }
