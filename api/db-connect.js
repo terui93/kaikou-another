@@ -20,6 +20,7 @@ const getComments = function(res, page) {
     sql += 'WHERE 1=1 '
     sql += '  AND status = $1 '
     sql += '  AND page = $2 '
+    sql += 'ORDER BY id DESC '
 
     const query = {
         text: sql,

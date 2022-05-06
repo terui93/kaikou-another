@@ -10,6 +10,7 @@
             <v-text-field v-model="name" label="名前" class="comment-name"></v-text-field>
             <p v-if="nameError != ''" style="color: red; font-size: 8px;">{{nameError}}</p>
             <v-textarea v-model="comment" class="comment-area" label="コメント"></v-textarea>
+            <p v-if="commentError != ''" style="color: red; font-size: 8px;">{{commentError}}</p>
             <v-spacer></v-spacer>
             <v-btn @click="setComment" class="comment-button">コメントする</v-btn>
         </div>
@@ -43,6 +44,7 @@ export default {
             comment: '',
             comments: [],
             nameError: '',
+            commentError: '',
             isCommentSet: false,
         }
     },
@@ -67,14 +69,25 @@ export default {
             this.isCommentSet = true;
         },
         setComment() {
+            let err = 0;
+
             if(this.name == ''){
                 this.nameError = '名前を入力してください。'
-                return false;
+                err++
             } else {
                 this.nameError = ''
             }
+            if(this.comment == '') {
+                this.commentError = 'コメントを入力してください。'
+                err++
+            } else {
+                this.commentError = ''
+            }
+
+            if(err != 0){
+                return false
+            }
             this.insertComment();
-            this.name = '';
             this.comment = '';
             this.isCommentSet = false;
             this.comments = [];
@@ -111,16 +124,22 @@ export default {
     padding-top: 10px;
 }
 .comment-name, .comment-area {
-    width: 60%;
+    width: max(60%,265px);
 }
 .comment-list {
     margin-top: 10px;
 }
 .comments_loading img {
-    width: 20%;
+    width: 50px;
     height: auto;
 }
 .comments_loading {
     margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+.comment-list h1{
+    font-size: 20px;
 }
 </style>
